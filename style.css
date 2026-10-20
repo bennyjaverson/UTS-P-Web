@@ -1,0 +1,162 @@
+:root {
+  color-scheme: dark;
+
+  --bg: #121816;
+  --surface: #1B2421;
+  --surface-2: #202C27;
+  --border: #2A3833;
+  --primary: #78BCA4;
+  --primary-strong: #A5DCC8;
+  --primary-soft: #233C33;
+  --accent: #F6B477;
+  --danger: #F0785A;
+  --danger-soft: rgba(240, 120, 90, .15);
+  --text: #E8EEEB;
+  --muted: #93A29B;
+  --radius-card: 20px;
+  --radius-control: 12px;
+  --shadow: 0 8px 26px rgba(0, 0, 0, .18);
+  --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+main.container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.eyebrow {
+  color: var(--muted);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.navbar {
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar-brand {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.navbar .nav-link:hover {
+  color: var(--accent);
+}
+
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+}
+
+.card-title {
+  font-weight: 700;
+}
+
+.form-label {
+  color: var(--muted);
+  font-size: .875rem;
+  font-weight: 600;
+}
+
+.form-control,
+.form-select {
+  background-color: var(--surface-2);
+  color: var(--text);
+  border-color: var(--border);
+  border-radius: var(--radius-control);
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: var(--surface-2);
+  color: var(--text);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 .2rem rgba(120, 188, 164, .25);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg);
+  border-radius: var(--radius-control);
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--primary-strong);
+  border-color: var(--primary-strong);
+  color: var(--bg);
+}
+
+.alert {
+  border-radius: var(--radius-control);
+}
+
+.alert-success {
+  background-color: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary-strong);
+}
+
+.alert-danger {
+  background-color: var(--danger-soft);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+#daftar {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#daftar h4 {
+  font-weight: 700;
+}
+
+.kotak-tabel {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.table {
+  --bs-table-bg: var(--surface);
+  --bs-table-striped-bg: var(--surface-2);
+  --bs-table-striped-color: var(--text);
+  color: var(--text);
+  border-color: var(--border);
+  margin-bottom: 0;
+}
+
+.table thead th {
+  background-color: var(--primary-soft);
+  color: var(--primary-strong);
+}
+
+.badge-menipis {
+  background-color: var(--danger-soft);
+  color: var(--danger);
+  border-radius: 999px;
+  padding: .4em .8em;
+  font-weight: 600;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+}
