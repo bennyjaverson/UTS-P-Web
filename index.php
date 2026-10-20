@@ -8,20 +8,20 @@ if(isset($_POST['submit'])){
     $harga = $_POST['harga'];
     $stok = $_POST['stok'];
 
-    if ($nama_barang == '') {
+    if ($nama_barang == ''){
         $errors[] = 'Nama barang wajib diisi.';
     }
-    if ($kategori == '') {
+    if ($kategori == ''){
         $errors[] = 'Kategori wajib dipilih.';
     }
-    if (!ctype_digit($harga) || $harga <= 0) {
+    if (!ctype_digit($harga) || $harga <= 0){
         $errors[] = 'Harga harus berupa angka lebih dari 0.';
     }
-    if (!ctype_digit($stok) || $stok <= 0) {
+    if (!ctype_digit($stok) || $stok <= 0){
         $errors[] = 'Stok harus berupa angka lebih dari 0.';
     }
 
-    if (empty($errors)) {
+    if (empty($errors)){
         $nama_barang = mysqli_real_escape_string($conn, $nama_barang);
         $kategori = mysqli_real_escape_string($conn, $kategori);
         $harga = (int) $harga;
@@ -87,7 +87,7 @@ if(isset($_POST['submit'])){
                     </div>
                     <div class="card">
                         <div class="card-body p-4">
-                            <p class="eyebrow text-center mb-1">Form Input</p>
+                            <p class="title text-center mb-1">Form Input</p>
                             <h4 class="card-title text-center mb-4">Tambah Stok Barang</h4>
                             <form id="form-barang" method="POST" action="" novalidate>
                                 <div class="mb-3">
@@ -137,8 +137,8 @@ if(isset($_POST['submit'])){
                     </thead>
                     <tbody>
                         <?php
-                        $query_tampil = mysqli_query($conn, "select * from barang order by id_barang desc");
-                        while($row = mysqli_fetch_assoc($query_tampil)) {
+                        $query_tampil = mysqli_query($conn, "select * from barang order by id_barang asc");
+                        while($row = mysqli_fetch_assoc($query_tampil)){
                         ?>
                             <tr>
                                 <th scope="row"><?php echo $row['id_barang']; ?></th>

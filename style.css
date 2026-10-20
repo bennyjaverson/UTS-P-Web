@@ -16,7 +16,7 @@
   --radius-card: 20px;
   --radius-control: 12px;
   --shadow: 0 8px 26px rgba(0, 0, 0, .18);
-  --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font: 'Plus Jakarta Sans', sans-serif;
 }
 
 body {
@@ -30,7 +30,7 @@ main.container {
   padding-bottom: 2rem;
 }
 
-.eyebrow {
+.title {
   color: var(--muted);
   font-size: .75rem;
   font-weight: 600;
