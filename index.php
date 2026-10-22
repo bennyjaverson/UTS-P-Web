@@ -4,14 +4,14 @@ $errors = [];
 
 if(isset($_POST['submit'])){
     $nama_barang = trim($_POST['nama_barang']);
-    $kategori = $_POST['kategori'];
+    $id_kategori = $_POST['id_kategori'];
     $harga = $_POST['harga'];
     $stok = $_POST['stok'];
 
     if ($nama_barang == ''){
         $errors[] = 'Nama barang wajib diisi.';
     }
-    if ($kategori == ''){
+    if ($id_kategori == ''){
         $errors[] = 'Kategori wajib dipilih.';
     }
     if (!ctype_digit($harga) || $harga <= 0){
@@ -23,23 +23,38 @@ if(isset($_POST['submit'])){
 
     if (empty($errors)){
         $nama_barang = mysqli_real_escape_string($conn, $nama_barang);
-        $kategori = mysqli_real_escape_string($conn, $kategori);
+        $id_kategori = (int) $id_kategori;
         $harga = (int) $harga;
         $stok = (int) $stok;
 
-        $cek_barang = mysqli_query($conn, "select * from barang where nama_barang = '$nama_barang' and kategori = '$kategori'");
+        $cek_barang = mysqli_query($conn, "select * from barang where nama_barang = '$nama_barang' and id_kategori = $id_kategori");
 
-        if (mysqli_num_rows($cek_barang)){
-            $query_update = "update barang set stok = stok + $stok where nama_barang = '$nama_barang' and kategori = '$kategori'";
+        if (mysqli_num_rows($cek_barang) > 0){
+            $query_update = "update barang set stok = stok + $stok where nama_barang = '$nama_barang' and id_kategori = $id_kategori";
             mysqli_query($conn, $query_update);
         } else{
-            $query_insert = "insert into barang (nama_barang, kategori, harga, stok) values ('$nama_barang', '$kategori', '$harga', '$stok')";
+            $query_insert = "insert into barang (nama_barang, id_kategori, harga, stok) values ('$nama_barang', $id_kategori, $harga, $stok)";
             mysqli_query($conn, $query_insert);
         }
 
         header("Location: index.php?status=sukses");
         exit;
     }
+}
+
+$sort = isset($_GET['sort']) ? $_GET['sort'] : '';
+$order_clause = "order by b.id_barang asc";
+
+if ($sort == 'kategori'){
+    $order_clause = "order by k.nama_kategori asc";
+} elseif ($sort == 'harga_asc'){
+    $order_clause = "order by b.harga asc";
+} elseif ($sort == 'harga_desc'){
+    $order_clause = "order by b.harga desc";
+} elseif ($sort == 'stok_asc'){
+    $order_clause = "order by b.stok asc";
+} elseif ($sort == 'stok_desc'){
+    $order_clause = "order by b.stok desc";
 }
 ?>
 
@@ -96,13 +111,14 @@ if(isset($_POST['submit'])){
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Kategori</label>
-                                    <select name="kategori" class="form-select" required>
+                                    <select name="id_kategori" class="form-select" required>
                                         <option value="" selected>Pilih Kategori</option>
-                                        <option value="Elektronik">Elektronik</option>
-                                        <option value="Alat Tulis">Alat Tulis</option>
-                                        <option value="Pakaian">Pakaian</option>
-                                        <option value="Makanan">Makanan</option>
-                                        <option value="Minuman">Minuman</option>
+                                        <?php
+                                        $query_kat = mysqli_query($conn, "select * from kategori order by nama_kategori asc");
+                                        while($kat = mysqli_fetch_assoc($query_kat)){
+                                            echo '<option value="' . $kat['id_kategori'] . '">' . htmlspecialchars($kat['nama_kategori']) . '</option>';
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -123,8 +139,21 @@ if(isset($_POST['submit'])){
             </div>
         </section>
         <section id="daftar" class="mt-5">
-            <h4 class="text-center mb-0">Daftar Barang</h4>
-            <div class="kotak-tabel mt-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Daftar Barang</h4>
+                <form method="GET" action="index.php#daftar" class="d-flex align-items-center gap-2">
+                    <label class="form-label mb-0 text-nowrap">Urutkan:</label>
+                    <select name="sort" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
+                        <option value="" <?php if($sort == '') echo 'selected'; ?>>Default (ID)</option>
+                        <option value="kategori" <?php if($sort == 'kategori') echo 'selected'; ?>>Kategori (A-Z)</option>
+                        <option value="harga_asc" <?php if($sort == 'harga_asc') echo 'selected'; ?>>Harga Terendah</option>
+                        <option value="harga_desc" <?php if($sort == 'harga_desc') echo 'selected'; ?>>Harga Tertinggi</option>
+                        <option value="stok_asc" <?php if($sort == 'stok_asc') echo 'selected'; ?>>Stok Terkecil</option>
+                        <option value="stok_desc" <?php if($sort == 'stok_desc') echo 'selected'; ?>>Stok Terbanyak</option>
+                    </select>
+                </form>
+            </div>
+            <div class="kotak-tabel">
                 <table class="table table-striped table-hover">
                     <thead class="table-dark">
                         <tr>
@@ -133,17 +162,20 @@ if(isset($_POST['submit'])){
                             <th scope="col">Kategori</th>
                             <th scope="col" class="kolom-harga">Harga</th>
                             <th scope="col" class="kolom-stok">Stok</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Tanggal Ditambah</th>
+                            <th scope="col">Terakhir Update</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $query_tampil = mysqli_query($conn, "select * from barang order by id_barang asc");
+                        $query_tampil = mysqli_query($conn, "select b.*, k.nama_kategori from barang b join kategori k on b.id_kategori = k.id_kategori $order_clause");
                         while($row = mysqli_fetch_assoc($query_tampil)){
                         ?>
                             <tr>
                                 <th scope="row" class="kolom-id"><?php echo $row['id_barang']; ?></th>
                                 <td><?php echo htmlspecialchars($row['nama_barang']); ?></td>
-                                <td><?php echo htmlspecialchars($row['kategori']); ?></td>
+                                <td><?php echo htmlspecialchars($row['nama_kategori']); ?></td>
                                 <td class="kolom-harga">Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></td>
                                 <td class="kolom-stok">
                                     <?php echo $row['stok']; ?>
@@ -151,6 +183,13 @@ if(isset($_POST['submit'])){
                                         <span class="badge badge-menipis">Stok Menipis</span>
                                     <?php endif; ?>
                                 </td>
+                                <td>
+                                    <span class="badge <?php echo $row['status'] == 'dijual' ? 'badge-dijual' : 'badge-tidak-dijual'; ?>">
+                                        <?php echo $row['status'] == 'dijual' ? 'Dijual' : 'Tidak Dijual'; ?>
+                                    </span>
+                                </td>
+                                <td><?php echo date('d-m-Y H:i', strtotime($row['created_at'])); ?></td>
+                                <td><?php echo date('d-m-Y H:i', strtotime($row['updated_at'])); ?></td>
                             </tr>
                         <?php
                         }
@@ -165,13 +204,3 @@ if(isset($_POST['submit'])){
     <script src="script.js"></script>
 </body>
 </html>
-`
-<!-- 
-Update harga belum ditambahin(jadi di baigan daftar barang belum bisa update harga masih pake harga lama)
-sama tambahkan atribut misal kapan ditambahin (tanggal) sama kapan terakhir diupdate (timestamp)
-tambahkan fitur shorting di bagian daftar barang berdasarkan, kategori, harga, dan stok(nanti ada 
-tombol shorting terus pilih mau short berdasarkan apa)
-sama tambahkan atribut kalau barang masih dijual atau sudah tidak dijual lagi 
-(berarti nanti nambahin kolom status di database) kalau sudah tidak dijual lagi berarti stoknya 0 
-dan statusnya tidak dijual lagi
-  -->

@@ -21,7 +21,7 @@ $(document).ready(function (){
 
     $('#form-barang').on('submit', function (e){
         var nama = $.trim($('#form-barang [name="nama_barang"]').val());
-        var kategori = $('#form-barang [name="kategori"]').val();
+        var kategori = $('#form-barang [name="id_kategori"]').val();
         var harga = $('#form-barang [name="harga"]').val();
         var stok = $('#form-barang [name="stok"]').val();
         var pesan = [];

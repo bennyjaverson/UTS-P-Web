@@ -2,6 +2,6 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db   = "toko";
-$conn = new mysqli($host, $user, $pass, $db);
+$db   = "db_inventaris_toko";
+$conn = new mysqli($host,$user, $pass,$db);
 ?>

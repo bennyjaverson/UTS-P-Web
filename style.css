@@ -23,11 +23,15 @@ body {
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main.container {
   padding-top: 2rem;
   padding-bottom: 2rem;
+  flex: 1;
 }
 
 .title {
@@ -117,7 +121,7 @@ main.container {
 }
 
 #daftar {
-  max-width: 900px;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -208,6 +212,22 @@ main.container {
   padding: .45em .75em;
   font-weight: 600;
   vertical-align: middle;
+}
+
+.badge-dijual {
+  background-color: var(--primary-soft);
+  color: var(--primary-strong);
+  border-radius: 999px;
+  padding: .45em .75em;
+  font-weight: 600;
+}
+
+.badge-tidak-dijual {
+  background-color: var(--danger-soft);
+  color: var(--danger);
+  border-radius: 999px;
+  padding: .45em .75em;
+  font-weight: 600;
 }
 
 @media (max-width: 767.98px) {
