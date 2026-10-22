@@ -129,29 +129,102 @@ main.container {
 .kotak-tabel {
   background-color: var(--surface);
   border: 1px solid var(--border);
-  overflow-x: auto;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
 .table {
   --bs-table-bg: var(--surface);
   --bs-table-striped-bg: var(--surface-2);
   --bs-table-striped-color: var(--text);
+  --bs-table-hover-bg: #293831;
+  --bs-table-hover-color: var(--text);
   color: var(--text);
   border-color: var(--border);
   margin-bottom: 0;
+  min-width: 680px;
 }
 
 .table thead th {
   background-color: var(--primary-soft);
   color: var(--primary-strong);
+  border-bottom: 1px solid var(--primary);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: 1rem 1.25rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.table tbody th,
+.table tbody td {
+  border-bottom-width: 1px;
+  padding: 1rem 1.25rem;
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table tbody tr {
+  transition: background-color .2s ease;
+}
+
+.table tbody th {
+  color: var(--primary-strong);
+  font-weight: 700;
+}
+
+.kolom-id {
+  text-align: center;
+  width: 72px;
+}
+
+.kolom-harga,
+.kolom-stok {
+  text-align: left;
+  white-space: nowrap;
+}
+
+.kolom-harga {
+  min-width: 150px;
+}
+
+.kolom-stok {
+  min-width: 175px;
 }
 
 .badge-menipis {
   background-color: var(--danger-soft);
   color: var(--danger);
   border-radius: 999px;
-  padding: .4em .8em;
+  display: inline-block;
+  font-size: .75rem;
+  margin-left: .5rem;
+  padding: .45em .75em;
   font-weight: 600;
+  vertical-align: middle;
+}
+
+@media (max-width: 767.98px) {
+  #daftar {
+    max-width: 100%;
+  }
+
+  .kotak-tabel {
+    overflow-x: auto;
+  }
+
+  .table thead th,
+  .table tbody th,
+  .table tbody td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 footer {

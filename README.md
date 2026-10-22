@@ -1,12 +1,13 @@
-# UTS Web - Manajemen Stok Barang
+# UTS P Web - Manajemen Stok Barang
 
-Mini web app untuk mencatat stok barang. Dibuat untuk Tugas UTS Web (HTML, CSS, JavaScript, jQuery, Bootstrap, dan PHP).
+Mini web app untuk mencatat stok barang. Dibuat untuk Tugas UTS Matkul P Web (HTML, CSS, JavaScript, jQuery, Bootstrap, dan PHP).
 
 ## Identitas
 
 - Nama: Benny Javerson D A
 - NIM: 252410103106
 - Tema: No. 6 - Manajemen Stok Barang Sederhana
+- Repository: [bennyjaverson/UTS-P-Web](https://github.com/bennyjaverson/UTS-P-Web)
 
 ## Fitur
 

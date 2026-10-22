@@ -123,16 +123,16 @@ if(isset($_POST['submit'])){
             </div>
         </section>
         <section id="daftar" class="mt-5">
-            <h4 class="text-center">Daftar Barang</h4>
+            <h4 class="text-center mb-0">Daftar Barang</h4>
             <div class="kotak-tabel mt-3">
-                <table class="table table-striped">
+                <table class="table table-striped table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col" class="kolom-id">ID</th>
                             <th scope="col">Nama Barang</th>
                             <th scope="col">Kategori</th>
-                            <th scope="col">Harga</th>
-                            <th scope="col">Stok</th>
+                            <th scope="col" class="kolom-harga">Harga</th>
+                            <th scope="col" class="kolom-stok">Stok</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,14 +141,14 @@ if(isset($_POST['submit'])){
                         while($row = mysqli_fetch_assoc($query_tampil)){
                         ?>
                             <tr>
-                                <th scope="row"><?php echo $row['id_barang']; ?></th>
+                                <th scope="row" class="kolom-id"><?php echo $row['id_barang']; ?></th>
                                 <td><?php echo htmlspecialchars($row['nama_barang']); ?></td>
                                 <td><?php echo htmlspecialchars($row['kategori']); ?></td>
-                                <td>Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></td>
-                                <td>
+                                <td class="kolom-harga">Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></td>
+                                <td class="kolom-stok">
                                     <?php echo $row['stok']; ?>
                                     <?php if($row['stok'] <= 5) : ?>
-                                        <span class="badge badge-menipis ms-1">Stok Menipis</span>
+                                        <span class="badge badge-menipis">Stok Menipis</span>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -165,3 +165,13 @@ if(isset($_POST['submit'])){
     <script src="script.js"></script>
 </body>
 </html>
+`
+<!-- 
+Update harga belum ditambahin(jadi di baigan daftar barang belum bisa update harga masih pake harga lama)
+sama tambahkan atribut misal kapan ditambahin (tanggal) sama kapan terakhir diupdate (timestamp)
+tambahkan fitur shorting di bagian daftar barang berdasarkan, kategori, harga, dan stok(nanti ada 
+tombol shorting terus pilih mau short berdasarkan apa)
+sama tambahkan atribut kalau barang masih dijual atau sudah tidak dijual lagi 
+(berarti nanti nambahin kolom status di database) kalau sudah tidak dijual lagi berarti stoknya 0 
+dan statusnya tidak dijual lagi
+  -->
